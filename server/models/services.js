@@ -26,7 +26,7 @@ const serviceSchema = new mongoose.Schema({
     type: String,
   },
   KeyWords: {
-    type: String,
+    type: [String],
   }
   })
 

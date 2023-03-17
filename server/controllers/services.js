@@ -37,7 +37,7 @@ const addService = async (req,res)=>{
     KeyWords, } = req.body;
   let image = req.files.coverImages;
   console.log(image)
-  image.mv(path.join(__dirname, 'img/') + image.name)
+  image.mv(path.join(__dirname, 'imgServices/') + image.name)
   const newService = await Service.create({
           title, 
           ServiceDescription, 
@@ -46,7 +46,7 @@ const addService = async (req,res)=>{
           MoneyOffer,
           Duration,
           KeyWords,
-          coverImages : 'img/' + image.name,
+          coverImages : 'imgServices/' + image.name,
       });
   res.status(201).json(newService);
   }

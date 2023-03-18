@@ -15,4 +15,4 @@ const postulateSchema = new mongoose.Schema({
 }
   })
 
-module.exports = mongoose.model("Jobs", jobsSchema);
+module.exports = mongoose.model("Form", postulateSchema);

@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require("./routes/auth");
 const serviceRouter = require("./routes/services");
 const jobsRouter = require("./routes/jobs");
+const FormRouter = require("./routes/postulate");
 const propositionFormRouter = require("./routes/propositionForm");
 const requireLogin = require("./middlewares/authentication");
 const app = express();
@@ -54,6 +55,7 @@ app.use("/api/v1/",authRouter);
 app.use("/api/v1/",serviceRouter);
 app.use("/api/v1/",jobsRouter);
 app.use("/api/v1/",propositionFormRouter);
+app.use("/api/v1/",FormRouter);
 
 app.get('/protected', requireLogin, (req, res) => {
   res.send(`Hello, ${req.session.userId}!`);

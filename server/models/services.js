@@ -35,6 +35,10 @@ const serviceSchema = new mongoose.Schema({
   list_form_postulate : {
     type : [String]
   },
+  isActive : {
+    type : Boolean,
+    default: true
+  },
   set_as_finished_client : {
     type : Boolean,
     default: false

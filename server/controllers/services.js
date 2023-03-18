@@ -3,8 +3,7 @@ const path = require("path");
 
 const getAllServices = async (req,res)=>{
   try{
-    const data = await Service.find();
-    
+    const data = await Service.find();    
     res.status(200).json({ data: data })
   }
   catch (err) {
@@ -97,5 +96,59 @@ const set_as_finished_freelancer_true = async (req,res)=>{
   }
 }
 
+const displayPostulate = async (req,res)=>{
+  try {
+    const { id } = req.body
+    const service = Service.findById(id)
+    const peopleWhoPostulated = service.list_form_postulate
+    res.status(201).json(peopleWhoPostulated); //this is an id for form, so we gotta search in filter form
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
-module.exports = { getAllServices, getFilteredServices, addService, getAllServicesOfOneClient, set_as_finished_client_true, set_as_finished_freelancer_true }
+const acceptFreelancer = async (req,res)=>{
+  try {
+    const {id_form_freelancer, id_annonce} = req.body
+    const service = Service.findById(id_annonce)
+    const freelancerForms = service.list_form_postulate
+    i = freelancerForms.indexOf(id_form_freelancer)
+    freelancerForms =  freelancerForms[i]
+    service.freelancerForms = freelancerForms
+    service.isActive = false
+    service.save()
+    res.status(201).json(freelancerForms); 
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+const refuseFreelancer = async (req,res)=>{
+  try {
+    const {id_form_freelancer, id_annonce} = req.body
+    const service = Service.findById(id_annonce)
+    const freelancerForms = service.list_form_postulate
+    i = freelancerForms.indexOf(id_form_freelancer)
+    delete freelancerForms[i]
+    service.freelancerForms = freelancerForms
+    service.save()
+    res.status(201).json(freelancerForms); 
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+const serviceIsOutdated = async (req,res)=>{
+  try {
+    const { id } = req.body
+    const service = await Service.findById(id);
+    service.isActive = false
+    service.save()
+    res.status(201).json(service);
+  } catch(err) {
+    res.status(400).json(err);
+  }
+}
+
+
+module.exports = { getAllServices, getFilteredServices, addService, getAllServicesOfOneClient, set_as_finished_client_true, set_as_finished_freelancer_true, displayPostulate, serviceIsOutdated, refuseFreelancer, acceptFreelancer }

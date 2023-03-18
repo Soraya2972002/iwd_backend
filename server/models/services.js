@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { boolean } = require("webidl-conversions");
 
 const serviceSchema = new mongoose.Schema({
   coverImages: {
@@ -14,19 +15,33 @@ const serviceSchema = new mongoose.Schema({
       required: [true, "Please provide a description"]
   },
   latitude : {
-    type : String,
+    type : Number,
   },
   longtitude : {
-    type : String,
+    type : Number,
   },
   MoneyOffer: {
-      type: String,
+      type: Number,
   },
   Duration: {
     type: String,
   },
   KeyWords: {
     type: [String],
+  },
+  id_client :{
+    type : String
+  },
+  list_form_postulate : {
+    type : [String]
+  },
+  set_as_finished_client : {
+    type : Boolean,
+    default: false
+  },
+  set_as_finished_freelancer : {
+    type : Boolean,
+    default: false
   }
   })
 

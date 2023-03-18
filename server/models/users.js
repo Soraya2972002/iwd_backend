@@ -8,12 +8,21 @@ const commentSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-  username: {
+  nom: {
     type: String,
     required: [true, "Please provide a username"],
     min: 3,
     max: 20,
-    unique: true,
+  },
+  prenom: {
+    type: String,
+    required: [true, "Please provide a username"],
+    min: 3,
+    max: 20,
+  },
+  baridimob : {
+    type: Number,
+    required: [true, "Please provide your account number"],
   },
   email: {
     type: String,
@@ -24,40 +33,54 @@ const userSchema = new mongoose.Schema({
   phone_number : {
     type : Number,
     max: 9999999999,
-    min : 10,
+    min : 1111111111,
   },
   password: {
     type: String,
     required: [true, "Please provide a password"],
     min: 8,
   },
-  picture: {
+  profile_picture: {
     type: String,
   },
+  identity_picture : {
+    type: String,
+    required: [true, "Please provide your identity picture, for safety measures"],
+  },
   latitude : {
-    type : String,
+    type : Number,
   },
   longtitude : {
-    type : String,
+    type : Number,
   },
   bio : {
     type : String,
   },
   services : {
-    type : String,
+    type : [String],
+    enum: ["skill 1", "skill 2", "skill 3", "skill 3", "skill 4", "Other"]
   },
   interestedTheme : {
     type: [String],
-    enum: ["topic 1", "topic 2", "topic 3", "topic 3", "topic 4", "Other"]
+    enum: ["topic 1", "topic 2", "topic 3", "topic 3", "topic 4"]
   },
-  skills : {
+  interestedThemeOther : {
     type : [String],
-    enum: ["skill 1", "skill 2", "skill 3", "skill 3", "skill 4", "Other"]
   },
   reviews: {
     type : [commentSchema]  
   },
+  bids : {
+    type : Number,
+    default : 100
+  }
 
 });
 
-module.exports = mongoose.model("Users", userSchema);
+userSchema.virtual('location').get(function() {
+  return [this.longitude, this.latitude];
+});
+
+User = mongoose.model("Users", userSchema);
+Comment = mongoose.model("Comment", commentSchema);
+module.exports = {User, Comment}

@@ -14,13 +14,17 @@ const jobsSchema = new mongoose.Schema({
       required: [true, "Please provide a description"]
   },
   MoneyOffer: {
-      type: String,
+      type: Number,
   },
   Duration: {
     type: String,
   },
   DemandedSkills: {
     type: [String],
+  },
+  isActive : {
+    type: Boolean,
+    default: true // Default value is false
   }
   })
 

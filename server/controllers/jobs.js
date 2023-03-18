@@ -52,4 +52,16 @@ const addJob = async (req,res)=>{
   }
 }
 
-module.exports = { getAllJobs, getFilteredJobs, addJob }
+const jobIsOutdated = async (req,res)=>{
+  try {
+    const { id } = req.body
+    const job = await Job.findById(id);
+    job.isActive = false
+    job.save()
+    res.status(201).json(job);
+  } catch(err) {
+    res.status(400).json(err);
+  }
+}
+
+module.exports = { getAllJobs, getFilteredJobs, addJob, jobIsOutdated }

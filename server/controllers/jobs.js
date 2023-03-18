@@ -1,7 +1,7 @@
 const Job = require('../models/jobs.js')
 const path = require("path");
 
-const getAllJobs = async (req,res)=>{
+const getAllJobs = async (req,res)=>{ 
   try{
   const data = await Job.find();
   res.status(200).json({ data: data })
@@ -52,7 +52,7 @@ const addJob = async (req,res)=>{
   }
 }
 
-const jobIsOutdated = async (req,res)=>{
+const jobIsOutdated = async (req,res)=>{ // this is for when the announce is outdated, it won't be displayed anymore
   try {
     const { id } = req.body
     const job = await Job.findById(id);

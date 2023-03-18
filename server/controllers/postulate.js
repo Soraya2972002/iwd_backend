@@ -2,7 +2,7 @@ const Form = require('../models/postulate')
 const path = require("path");
 
 
-const getFilteredForms = async (req, res) => {
+const getFilteredForms = async (req, res) => { 
   const filters = req.query;
   const data = await Form.find();
   const filteredForms = data.filter(form => {
@@ -16,7 +16,7 @@ const getFilteredForms = async (req, res) => {
   res.send(filteredForms);
 }
 
-const addForm = async (req,res)=>{
+const addForm = async (req,res)=>{ // this is a form that the freelancer fills with the hope of getting the job
   try{
   const { text, 
     amount, 

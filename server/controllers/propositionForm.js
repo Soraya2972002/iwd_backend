@@ -1,6 +1,6 @@
 const propositionForm = require('../models/propositionForm')
 
-const addpropositionForm = async (req,res)=>{
+const addPropositionForm = async (req,res)=>{
   try{
   const { propositionText, 
     bids, 
@@ -32,4 +32,4 @@ const getFilteredPropositionForms = async (req, res) => {
   res.send(filteredpropositionForm);
 }
 
-module.exports = { addpropositionForm, getFilteredPropositionForms }
+module.exports = { addPropositionForm, getFilteredPropositionForms }

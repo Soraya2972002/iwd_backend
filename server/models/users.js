@@ -77,9 +77,6 @@ const userSchema = new mongoose.Schema({
 
 });
 
-userSchema.virtual('location').get(function() {
-  return [this.longitude, this.latitude];
-});
 
 User = mongoose.model("Users", userSchema);
 Comment = mongoose.model("Comment", commentSchema);

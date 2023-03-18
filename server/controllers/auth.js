@@ -2,7 +2,7 @@ const {User, Comment} = require('../models/users.js')
 const bcrypt = require('bcrypt')
 const path = require("path");
 
-function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) { 
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
   var dLon = deg2rad(lon2-lon1); 
@@ -21,7 +21,7 @@ function deg2rad(deg) {
 }
 
 
-const login = async (req, res, next) => {
+const login = async (req, res, next) => { // user login
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -41,7 +41,7 @@ const login = async (req, res, next) => {
 
 
 
-const register = async (req, res, next) => {
+const register = async (req, res, next) => { //user register
   try {
     const { nom, prenom, email, password, phone_number, bio, services, interestedTheme, baridimob, reviews, latitude, longtitude} = req.body;
     const emailCheck = await User.findOne({ email });
@@ -101,7 +101,7 @@ const register = async (req, res, next) => {
 };
 
 
-const logout = async (req, res) => {
+const logout = async (req, res) => { //user logout
   console.log(req.session.userId)
   id = req.session.userId
   console.log(id)
@@ -112,7 +112,7 @@ const logout = async (req, res) => {
   })
 }
 
-const displayAllUsers = async (req,res)=>{
+const displayAllUsers = async (req,res)=>{ //to get all users
   try{
   const data = await User.find();
   res.status(200).json({ data: data })
@@ -123,7 +123,7 @@ const displayAllUsers = async (req,res)=>{
   }
 }
 
-const getFilteredUsers = async (req, res) => {
+const getFilteredUsers = async (req, res) => {  // to filter users, according to any query
   const filters = req.query;
   const data = await User.find();
   const filteredusers= data.filter(user => {
@@ -137,7 +137,7 @@ const getFilteredUsers = async (req, res) => {
   res.send(filteredusers);
 }
 
-const updateUserphone = async (req, res) => {
+const updateUserphone = async (req, res) => { // to update the phone number of the user
   try {
     const { id, new_phone } = req.body;
     const user = await User.findById({ id:id });
@@ -150,7 +150,7 @@ const updateUserphone = async (req, res) => {
   }
 }
 
-const writeReview = async (req, res) => {
+const writeReview = async (req, res) => { // to write a review about the work of a freelancer - you write a text and also get to add a rating
   try {
     const { id_of_other_person, rating, text, author } = req.body;
     const review = await Comment.create({
@@ -167,7 +167,7 @@ const writeReview = async (req, res) => {
   }
 }
 
-const getGlobalReview = async (req, res) => {
+const getGlobalReview = async (req, res) => { // to get the average rating of a user
   try {
     const { id } = req.body;
     const user = await User.findById(id);
@@ -188,7 +188,7 @@ const getGlobalReview = async (req, res) => {
   }
 }
 
-const DisplayAllReviews = async (req, res) => {
+const DisplayAllReviews = async (req, res) => { //to display all reviews of a certain user
   try {
     const { id } = req.body;
     const reviews = await User.findById(id).reviews;
@@ -199,7 +199,7 @@ const DisplayAllReviews = async (req, res) => {
   }
 }
 
-const ClosestPeopleToYou = async (req, res) => {
+const ClosestPeopleToYou = async (req, res) => { //to find the people close to you using their gps coordonates, this is in order to get an accurate result when searching for people after posting an announce
   try {
     let { id, maxDistance } = req.body;
     if (!maxDistance){
@@ -224,7 +224,7 @@ const ClosestPeopleToYou = async (req, res) => {
   }
 }
 
-const getNumBids = async (req, res) => {
+const getNumBids = async (req, res) => { // get the number of bids of a certain user - these are virtual points used inside of the app
   try {
     let { id } = req.body;
     const user = await User.findById(id)
@@ -236,7 +236,7 @@ const getNumBids = async (req, res) => {
   }
 }
 
-const updateBids = async (req, res) => {
+const updateBids = async (req, res) => { //update the bids - when a user gets a job, the bids decrease, and they increase once a month or when buying them
   try {
     let { id, amount_to_add } = req.body;
     const user = await User.findById(id);
